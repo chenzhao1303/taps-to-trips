@@ -10,7 +10,7 @@ import tapstotrips.pricing.FareTable;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -126,7 +126,7 @@ public final class TripMatcher {
                 TripStatus.INCOMPLETE);
     }
 
-    private LocalDateTime sortKey(Trip trip) {
+    private Instant sortKey(Trip trip) {
         return trip.started() != null ? trip.started() : trip.finished();
     }
 

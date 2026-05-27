@@ -1,7 +1,7 @@
 package tapstotrips.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * A matched trip. For INCOMPLETE trips caused by an ON without an OFF, the OFF-side fields
@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
  * fields (started, fromStopId) are null instead.
  */
 public record Trip(
-        LocalDateTime started,
-        LocalDateTime finished,
+        Instant started,
+        Instant finished,
         Long durationSecs,
         String fromStopId,
         String toStopId,

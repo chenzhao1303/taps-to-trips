@@ -7,7 +7,7 @@ import tapstotrips.model.TripStatus;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,8 +19,8 @@ class TripCsvWriterTest {
     @Test
     void writesHeaderAndCompletedRow_inSpecFormat() throws IOException {
         Trip completed = new Trip(
-                LocalDateTime.of(2023, 1, 22, 13, 0, 0),
-                LocalDateTime.of(2023, 1, 22, 13, 5, 0),
+                Instant.parse("2023-01-22T13:00:00Z"),
+                Instant.parse("2023-01-22T13:05:00Z"),
                 300L,
                 "Stop1", "Stop2",
                 new BigDecimal("3.25"),
@@ -38,7 +38,7 @@ class TripCsvWriterTest {
     @Test
     void incompleteOn_leavesOffSideBlank() throws IOException {
         Trip incomplete = new Trip(
-                LocalDateTime.of(2023, 1, 22, 9, 20, 0),
+                Instant.parse("2023-01-22T09:20:00Z"),
                 null, null,
                 "Stop3", null,
                 new BigDecimal("7.30"),
@@ -58,7 +58,7 @@ class TripCsvWriterTest {
     void orphanOff_leavesOnSideBlank() throws IOException {
         Trip orphan = new Trip(
                 null,
-                LocalDateTime.of(2023, 1, 24, 16, 30, 0),
+                Instant.parse("2023-01-24T16:30:00Z"),
                 null,
                 null, "Stop2",
                 new BigDecimal("5.50"),
@@ -76,8 +76,8 @@ class TripCsvWriterTest {
     @Test
     void cancelledTrip_chargeIsZeroDollars() throws IOException {
         Trip cancelled = new Trip(
-                LocalDateTime.of(2023, 1, 23, 8, 0, 0),
-                LocalDateTime.of(2023, 1, 23, 8, 2, 0),
+                Instant.parse("2023-01-23T08:00:00Z"),
+                Instant.parse("2023-01-23T08:02:00Z"),
                 120L,
                 "Stop1", "Stop1",
                 new BigDecimal("0.00"),
@@ -94,8 +94,8 @@ class TripCsvWriterTest {
     @Test
     void roundsCharge_toTwoDecimals() throws IOException {
         Trip trip = new Trip(
-                LocalDateTime.of(2023, 1, 22, 13, 0, 0),
-                LocalDateTime.of(2023, 1, 22, 13, 5, 0),
+                Instant.parse("2023-01-22T13:00:00Z"),
+                Instant.parse("2023-01-22T13:05:00Z"),
                 300L,
                 "Stop1", "Stop2",
                 new BigDecimal("3.255"),  // halves up → $3.26

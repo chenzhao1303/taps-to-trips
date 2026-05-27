@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 public final class TapCsvReader {
 
     static final DateTimeFormatter DATE_TIME_FORMAT =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneOffset.UTC);
 
     private static final CSVFormat FORMAT = CSVFormat.DEFAULT.builder()
             .setHeader()
@@ -49,7 +50,7 @@ public final class TapCsvReader {
     private static Tap toTap(CSVRecord record) {
         return new Tap(
                 Long.parseLong(record.get("ID")),
-                LocalDateTime.parse(record.get("DateTimeUTC"), DATE_TIME_FORMAT),
+                DATE_TIME_FORMAT.parse(record.get("DateTimeUTC"), Instant::from),
                 TapType.valueOf(record.get("TapType")),
                 record.get("StopId"),
                 record.get("CompanyId"),

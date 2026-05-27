@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public final class TripCsvWriter {
 
     private static final DateTimeFormatter DATE_TIME_FORMAT =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneOffset.UTC);
 
     private static final String[] HEADERS = {
             "Started", "Finished", "DurationSecs",
@@ -66,7 +67,7 @@ public final class TripCsvWriter {
         }
     }
 
-    private static String formatDateTime(LocalDateTime dt) {
+    private static String formatDateTime(Instant dt) {
         return dt == null ? null : DATE_TIME_FORMAT.format(dt);
     }
 

@@ -1,10 +1,10 @@
 package tapstotrips.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record Tap(
         long id,
-        LocalDateTime dateTime,
+        Instant dateTime,
         TapType type,
         String stopId,
         String companyId,

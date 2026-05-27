@@ -6,7 +6,7 @@ import tapstotrips.model.TapType;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +29,7 @@ class TapCsvReaderTest {
         assertThat(taps).hasSize(2);
         Tap first = taps.getFirst();
         assertThat(first.id()).isEqualTo(1L);
-        assertThat(first.dateTime()).isEqualTo(LocalDateTime.of(2023, 1, 22, 13, 0, 0));
+        assertThat(first.dateTime()).isEqualTo(Instant.parse("2023-01-22T13:00:00Z"));
         assertThat(first.type()).isEqualTo(TapType.ON);
         assertThat(first.stopId()).isEqualTo("Stop1");
         assertThat(first.companyId()).isEqualTo("Company1");

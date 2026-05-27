@@ -7,7 +7,7 @@ import tapstotrips.model.Trip;
 import tapstotrips.model.TripStatus;
 import tapstotrips.pricing.FareTable;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -142,9 +142,9 @@ class TripMatcherTest {
         assertThat(trips).hasSize(3);
         // Expected order by sortKey(started ?? finished): 09:00 (orphan), 13:00, 08:00 next day.
         assertThat(trips.get(0).status()).isEqualTo(TripStatus.INCOMPLETE);
-        assertThat(trips.get(0).finished()).isEqualTo(LocalDateTime.parse("2023-01-22T09:00:00"));
-        assertThat(trips.get(1).started()).isEqualTo(LocalDateTime.parse("2023-01-22T13:00:00"));
-        assertThat(trips.get(2).started()).isEqualTo(LocalDateTime.parse("2023-01-23T08:00:00"));
+        assertThat(trips.get(0).finished()).isEqualTo(Instant.parse("2023-01-22T09:00:00Z"));
+        assertThat(trips.get(1).started()).isEqualTo(Instant.parse("2023-01-22T13:00:00Z"));
+        assertThat(trips.get(2).started()).isEqualTo(Instant.parse("2023-01-23T08:00:00Z"));
     }
 
     private static Tap tap(long id, String iso, TapType type, String stopId, String pan) {
@@ -153,6 +153,6 @@ class TripMatcherTest {
 
     private static Tap tap(long id, String iso, TapType type, String stopId,
                            String pan, String companyId, String busId) {
-        return new Tap(id, LocalDateTime.parse(iso), type, stopId, companyId, busId, pan);
+        return new Tap(id, Instant.parse(iso + "Z"), type, stopId, companyId, busId, pan);
     }
 }
