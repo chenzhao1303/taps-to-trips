@@ -26,6 +26,10 @@ public final class FareTable {
     }
 
     public BigDecimal fareBetween(String stopA, String stopB) {
+        if (stopA.equals(stopB)) {
+            throw new IllegalArgumentException(
+                    "fareBetween requires two distinct stops, got " + stopA + " twice");
+        }
         BigDecimal fare = fares.get(Set.of(stopA, stopB));
         if (fare == null) {
             throw new IllegalArgumentException(

@@ -28,6 +28,13 @@ class FareTableTest {
     }
 
     @Test
+    void fareBetween_sameStop_throws() {
+        assertThatThrownBy(() -> fares.fareBetween("Stop1", "Stop1"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("distinct");
+    }
+
+    @Test
     void maxFareFrom_picksLargestReachable() {
         assertThat(fares.maxFareFrom("Stop1")).isEqualByComparingTo("7.30");
         assertThat(fares.maxFareFrom("Stop2")).isEqualByComparingTo("5.50");
