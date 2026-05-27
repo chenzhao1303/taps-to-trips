@@ -33,6 +33,7 @@ public final class TripCsvWriter {
 
     private static final CSVFormat FORMAT = CSVFormat.DEFAULT.builder()
             .setHeader(HEADERS)
+            .setRecordSeparator('\n')
             .build();
 
     public void write(List<Trip> trips, Path path) throws IOException {
