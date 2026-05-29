@@ -77,7 +77,7 @@ public final class TripMatcher {
                         pendingOn = null;
                     } else {
                         log.warn("Orphan OFF tap (no preceding ON): id={}, pan={}, busId={}, stop={}, at={}",
-                                tap.id(), tap.pan(), tap.busId(), tap.stopId(), tap.dateTime());
+                                tap.id(), maskPan(tap.pan()), tap.busId(), tap.stopId(), tap.dateTime());
                         out.add(orphanOff(tap));
                     }
                 }
@@ -124,6 +124,12 @@ public final class TripMatcher {
                 fares.maxFareFrom(off.stopId()),
                 off.companyId(), off.busId(), off.pan(),
                 TripStatus.INCOMPLETE);
+    }
+
+    static String maskPan(String pan) {
+        return pan == null || pan.length() < 4
+                ? "****"
+                : "****" + pan.substring(pan.length() - 4);
     }
 
     private Instant sortKey(Trip trip) {

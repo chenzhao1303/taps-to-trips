@@ -147,6 +147,14 @@ class TripMatcherTest {
         assertThat(trips.get(2).started()).isEqualTo(Instant.parse("2023-01-23T08:00:00Z"));
     }
 
+    @Test
+    void maskPan_showsOnlyLastFourDigits() {
+        assertThat(TripMatcher.maskPan("5500005555555559")).isEqualTo("****5559");
+        assertThat(TripMatcher.maskPan("1234")).isEqualTo("****1234");
+        assertThat(TripMatcher.maskPan("12")).isEqualTo("****");
+        assertThat(TripMatcher.maskPan(null)).isEqualTo("****");
+    }
+
     private static Tap tap(long id, String iso, TapType type, String stopId, String pan) {
         return tap(id, iso, type, stopId, pan, CO, BUS);
     }
